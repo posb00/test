@@ -33,9 +33,11 @@ class AchievementsController extends Controller
             ->join('achievement_user', 'achievement_user.user_id', '=', 'user_id')
             ->join('achievements', 'achievements.id', '=', 'achievement_user.achievement_id')
             ->groupBy('achievements.achievementType_id')
-            ->select('achievements.next')
+            ->selectRaw('max(achievements.id) as id,achievements.achievementType_id')
             ->get();
 
-        return $archievements;
+        // $archievements;
+
+        $nexts = DB::table('achivements')->whereIn($archievements)->get();
     }
 }
