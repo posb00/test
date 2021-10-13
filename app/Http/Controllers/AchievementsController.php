@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use DB;
 
 class AchievementsController extends Controller
 {
@@ -29,15 +30,17 @@ class AchievementsController extends Controller
 
     public function next_available_achievements($id)
     {
-        $archievements = User::query()
-            ->join('achievement_user', 'achievement_user.user_id', '=', 'user_id')
-            ->join('achievements', 'achievements.id', '=', 'achievement_user.achievement_id')
-            ->groupBy('achievements.achievementType_id')
-            ->selectRaw('max(achievements.id) as id,achievements.achievementType_id')
-            ->get();
+        // $archievements = User::query()
+        //     ->join('achievement_user', 'achievement_user.user_id', '=', 'user_id')
+        //     ->join('achievements', 'achievements.id', '=', 'achievement_user.achievement_id')
+        //     ->groupBy('achievements.achievements_type_id')
+        //     ->selectRaw('max(achievements.id) as id,achievements.achievements_type_id')
+        //     ->get();
 
-        // $archievements;
+        
 
-        $nexts = DB::table('achivements')->whereIn($archievements)->get();
+        return $archievements;
+
+      //  $nexts = DB::table('achivements')->whereIn($archievements)->get();
     }
 }
