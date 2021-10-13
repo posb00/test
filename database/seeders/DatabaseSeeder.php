@@ -14,9 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            UserTableSeeder::class,
             AchievementTypeTableSeeder::class,
             AchievementTableSeeder::class,
             BadgeTableSeeder::class,
+            LessonTableSeeder::class,
+            LessonUserTableSeeder::class,
         ]);
     }
 }

@@ -74,10 +74,10 @@ class User extends Authenticatable
     }
 
     /**
-     * The archievements that a user has.
+     * The achievements that a user has.
      */
-    public function archievements()
+    public function achievements()
     {
-        return $this->belongsToMany(Archievement::class);
+        return $this->belongsToMany(Achievement::class);
     }
 }

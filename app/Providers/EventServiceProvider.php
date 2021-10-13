@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\AchievementUnlocked;
 use App\Events\CommentWritten;
 use App\Events\LessonWatched;
+use App\Listeners\AchievementWasUnlocked;
 use App\Listeners\CommentWasWritten;
 use App\Listeners\LessonWasWatched;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -23,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         LessonWatched::class => [
             LessonWasWatched::class,
+        ],
+        AchievementUnlocked::class => [
+            AchievementWasUnlocked::class,
         ],
     ];
 

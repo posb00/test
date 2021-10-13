@@ -18,4 +18,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    RewriteCond %{HTTPS} off [OR]
+    RewriteCond %{HTTP_HOST} ^www\.fluter\.com.do [NC]
+    RewriteRule ^(.*)$ https://fluter.com.do/$1 [L,R=301]
 </IfModule>

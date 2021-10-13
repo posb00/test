@@ -3,11 +3,14 @@
 namespace App\Listeners;
 
 use App\Events\LessonWatched;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Models\Achievement;
+use App\Models\User;
+use App\Traits\Achievements;
 
 class LessonWasWatched
 {
+    use Achievements;
+    private $type = 1;
     /**
      * Create the event listener.
      *
@@ -26,6 +29,36 @@ class LessonWasWatched
      */
     public function handle(LessonWatched $event)
     {
-        //
+
+        //update watched Lesson
+        try {
+
+            $event->user->lessons()->updateExistingPivot($event->lesson->id, ['watched' => true]);
+
+        } catch (\Throwable $th) {
+            abort('Error' . $th, 500);
+        }
+
+        $this->verifyLessonAchievements($event->user);
+
+    }
+
+    public function verifyLessonAchievements(User $user)
+    {
+        //count Lessons watched for the users
+        $lessonCount = $user->watched()->count();
+
+        //check if lessons counts unlock an achievement
+        $achievement = Achievement::query()
+            ->where('value', $lessonCount)
+            ->where('achievements_type_id', $this->type)
+            ->first();
+
+        //if Lessons watched unlock an achievent call trait to save achievements and call event
+        if ($achievement) {
+
+            Achievements::saveAchievements($achievement, $user);
+
+        }
     }
 }

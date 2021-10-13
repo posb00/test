@@ -16,6 +16,7 @@ class CreateAchievementUserTable extends Migration
         Schema::create('achievement_user', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained();
             $table->foreignId('achievement_id')->constrained();
+            $table->integer('type');
             $table->timestamp('earned_at')->useCurrent();
             $table->unique(['user_id', 'achievement_id']);
         });
