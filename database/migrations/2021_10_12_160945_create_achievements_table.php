@@ -17,9 +17,9 @@ class CreateAchievementsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('value');
-            $table->foreignId('achievementType_id')->constrained();
-            $table->foreignId('next')->nullable()->constrained();
-            $table->unique(['name', 'achievementType_id']);
+            $table->foreignId('achievements_type_id')->constrained();
+            $table->integer('next')->nullable();
+            $table->unique(['name', 'achievements_type_id']);
             $table->timestamps();
         });
     }
