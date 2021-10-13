@@ -22,6 +22,11 @@ class AchievementWasUnlocked
      */
     public function handle($event)
     {
+        //count comments for the users
+        $commentsCount = $user->comments()->count();
+
+        //count Lessons watched for the users
+        $lessonCount = $user->watched()->count();
 
     }
 }
