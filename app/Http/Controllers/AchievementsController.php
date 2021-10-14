@@ -22,20 +22,6 @@ class AchievementsController extends Controller
         ]);
     }
 
-    public function nextAvailableAchievements($id)
-    {
-        $archievements = User::query()
-            ->join('achievement_user', 'achievement_user.user_id', '=', 'user_id')
-            ->join('achievements', 'achievements.id', '=', 'achievement_user.achievement_id')
-            ->groupBy('achievements.achievements_type_id')
-            ->selectRaw('max(achievements.id) as id,achievements.achievements_type_id')
-            ->get();
-
-        return $archievements;
-
-        //  $nexts = DB::table('achivements')->whereIn($archievements)->get();
-    }
-
     public function call()
     {
         $comment = new Comment();
