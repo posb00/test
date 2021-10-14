@@ -6,6 +6,7 @@ use App\Events\CommentWritten;
 use App\Events\LessonWatched;
 use App\Models\Comment;
 use App\Models\Lesson;
+use App\Models\Badge;
 use App\Models\User;
 
 class AchievementsController extends Controller
@@ -13,25 +14,15 @@ class AchievementsController extends Controller
     public function index(User $user)
     {
         return response()->json([
-            'unlocked_achievements' => $this->unlocked_archievements($user->id),
-            'next_available_achievements' => $this->next_available_achievements($user->id),
-            'current_badge' => '',
-            'next_badge' => '',
-            'remaing_to_unlock_next_badge' => 0,
+            'unlocked_achievements' => $user->unlocked_achievement,
+            'next_available_achievements' => $user->next_available_achievements,
+            'current_badge' => $user->current_badge,
+            'next_badge' => $user->next_badge,
+            'remaing_to_unlock_next_badge' => $user->remaining_next_badge
         ]);
     }
 
-    public function unlocked_archievements($id)
-    {
-        $archievements = User::query()
-            ->join('achievement_user', 'achievement_user.user_id', '=', 'user_id')
-            ->join('achievements', 'achievements.id', '=', 'achievement_user.achievement_id')
-            ->pluck('achievements.name');
-
-        return $archievements;
-    }
-
-    public function next_available_achievements($id)
+    public function nextAvailableAchievements($id)
     {
         $archievements = User::query()
             ->join('achievement_user', 'achievement_user.user_id', '=', 'user_id')
@@ -59,7 +50,7 @@ class AchievementsController extends Controller
 
     public function callLesson()
     {
-        $lesson = Lesson::find(1);
+        $lesson = Lesson::find(4);
         $user = User::find(1);
 
         event(new LessonWatched($lesson, $user));

@@ -39,13 +39,14 @@ class LessonWasWatched
             abort('Error' . $th, 500);
         }
 
-        $this->verifyLessonAchievements($event->user);
+        $this->unlockLessonAchievement($event->user);
 
     }
 
-    public function verifyLessonAchievements(User $user)
+    public function unlockLessonAchievement(User $user)
     {
-        //count Lessons watched for the users
+        try {
+                    //count Lessons watched for the users
         $lessonCount = $user->watched()->count();
 
         //check if lessons counts unlock an achievement
@@ -53,6 +54,10 @@ class LessonWasWatched
             ->where('value', $lessonCount)
             ->where('achievements_type_id', $this->type)
             ->first();
+
+        } catch (\Throwable $th) {
+            abort('Error ' .$th, 500);
+        }
 
         //if Lessons watched unlock an achievent call trait to save achievements and call event
         if ($achievement) {

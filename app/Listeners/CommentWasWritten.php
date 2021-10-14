@@ -47,20 +47,26 @@ class CommentWasWritten
 
         });
 
-        $this->verifyCommentsUnlockAchievements($user);
+        $this->unlockCommentAchievement($user);
 
     }
 
-    public function verifyCommentsUnlockAchievements(User $user)
+    public function unlockCommentAchievement(User $user)
     {
-        //count comments for the users
-        $commentsCount = $user->comments()->count();
+        try {
+        
+            //count comments for the users
+            $commentsCount = $user->comments()->count();
 
         //check if comments counts unlock an achievement
         $achievement = Achievement::query()
             ->where('value', $commentsCount)
             ->where('achievements_type_id', $this->type)
             ->first();
+        } catch (\Throwable $th) {
+            abort('Error ' .$th, 500);
+        }
+
 
         //if comments unlock an achievent call trait to save achievements and call event
         if ($achievement) {

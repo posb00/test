@@ -21,7 +21,8 @@ class AchievementUnlocked
      */
     public function __construct(String $achievement_name, User $user)
     {
-        //
+        $this->achievement_name = $achievement_name;
+        $this->user = $user;
     }
 
 }
