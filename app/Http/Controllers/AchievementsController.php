@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\CommentWritten;
-use App\Events\LessonWatched;
 use App\Models\Comment;
-use App\Models\Lesson;
-use App\Models\Badge;
 use App\Models\User;
 
 class AchievementsController extends Controller
@@ -18,7 +15,7 @@ class AchievementsController extends Controller
             'next_available_achievements' => $user->next_available_achievements,
             'current_badge' => $user->current_badge,
             'next_badge' => $user->next_badge,
-            'remaing_to_unlock_next_badge' => $user->remaining_next_badge
+            'remaing_to_unlock_next_badge' => $user->remaining_next_badge,
         ]);
     }
 

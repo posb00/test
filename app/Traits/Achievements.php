@@ -12,7 +12,7 @@ trait Achievements
     {
 
         //save achievement to user
-        $user->achievements()->attach($achievement->id, ['type' => $achievement->achievements_type_id]);
+        $user->achievements()->attach($achievement->id);
 
         //call event
         event(new AchievementUnlocked($achievement->name, $user));
